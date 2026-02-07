@@ -11,6 +11,7 @@ import mekanism.api.text.TextComponentGroup;
 import mekanism.common.MekanismModules;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.integration.MekanismHooks;
+import mekanism.common.item.armor.ItemMekaSuitArmor;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
 import moremekasuitmodules.common.config.MoreModulesConfig;
 import net.minecraft.entity.Entity;
@@ -21,17 +22,22 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class CommonPlayerTickHandler {
@@ -113,19 +119,25 @@ public class CommonPlayerTickHandler {
 
 
     //When the player dies
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onDeath(LivingDeathEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer player) {
             ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
             if (head.getItem() instanceof IModuleContainerItem item) {
                 boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
-                if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
-                    event.setCanceled(true);
-                    if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)
+                        || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)
+                        || isInfiniteModule) {
+                    if (!item.hasModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) && !isInfiniteModule
+                            && !tryExtractEnergyWhenDeath(player)) {
+                        return;
+                    }
+                    sendMessage(player, isInfiniteModule, item, head);
+                    if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) && !isInfiniteModule) {
                         item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                     }
+                    event.setCanceled(true);
                     Death(player, isInfiniteModule);
-                    sendMessage(player, isInfiniteModule, item, head);
                 }
             }
 
@@ -144,7 +156,11 @@ public class CommonPlayerTickHandler {
                     boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
                     if (!player.isEntityAlive()) {
                         if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
-                            if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+                            if (!item.hasModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) && !isInfiniteModule
+                                    && !tryExtractEnergyWhenDeath(player)) {
+                                return;
+                            }
+                            if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) && !isInfiniteModule) {
                                 item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
                             }
                             Death(player, isInfiniteModule);
@@ -391,5 +407,28 @@ public class CommonPlayerTickHandler {
         }
     }
 
+    private boolean tryExtractEnergyWhenDeath(EntityPlayer player) {
+        NonNullList<ItemStack> mekaArmorStacks = NonNullList.create();
+        double totalEnergy = 0;
 
+        for (ItemStack stack : player.inventory.armorInventory) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemMekaSuitArmor armorItem) {
+                mekaArmorStacks.add(stack);
+                totalEnergy += armorItem.getEnergy(stack);
+            }
+        }
+
+        double toExtract = MoreModulesConfig.current().config.mekaSuitEnergyUsageDeathCancelling.val();
+        if (totalEnergy < toExtract) {
+            return false;
+        }
+
+        for (ItemStack stack : mekaArmorStacks) {
+            ItemMekaSuitArmor armorItem = (ItemMekaSuitArmor) stack.getItem();
+            double energy = armorItem.getEnergy(stack);
+            armorItem.extract(stack, energy / totalEnergy * toExtract, true);
+        }
+
+        return true;
+    }
 }

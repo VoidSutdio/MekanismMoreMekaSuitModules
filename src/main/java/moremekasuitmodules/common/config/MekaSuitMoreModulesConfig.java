@@ -20,6 +20,7 @@ public class MekaSuitMoreModulesConfig extends BaseConfig {
     public final BooleanOption TCRecipes = new BooleanOption(this,  "TCRecipes", true, "Enable the default Thaumcraft Recipe");
     public final BooleanOption TCAspectRecipes = new BooleanOption(this,  "TCAspectRecipes", true, "Let default Thaumcraft recipes add the elements synthesized from both types of elements into the recipe.");
     public DoubleOption mekaSuitEnergyUsageItemAttack = new DoubleOption(this, "energyUsageItemattack", 200, "Energy cost per tick attacking entity");
+    public DoubleOption mekaSuitEnergyUsageDeathCancelling = new DoubleOption(this, "energyUsageWhenDeath", 25000000, "Energy cost for death cancelling");
 
     @Override
     public String getCategory() {

@@ -3,7 +3,9 @@ package moremekasuitmodules.client;
 import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleHelper;
+import mekanism.common.item.armor.ItemMekaSuitArmor;
 import moremekasuitmodules.common.MekaSuitMoreModules;
+import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.mekanism.mekasuit.gmut.ModuleGravitationalModulatingAdditionalUnit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -44,7 +46,9 @@ public class ClientTickHandler {
                 ItemStack head = minecraft.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
                 if (!minecraft.player.isEntityAlive()) {
                     if (head.getItem() instanceof IModuleContainerItem item) {
-                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT)) {
+                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)
+                                || (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) && isEnoughEnergyToDeathCancel())
+                                || item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT)) {
                             event.setCanceled(true);
                         }
                     }
@@ -69,5 +73,15 @@ public class ClientTickHandler {
                 }
             }
         }
+    }
+
+    private boolean isEnoughEnergyToDeathCancel() {
+        double totalEnergy = 0;
+        for (ItemStack stack : minecraft.player.inventory.armorInventory) {
+            if (!stack.isEmpty() && stack.getItem() instanceof ItemMekaSuitArmor armorItem) {
+                totalEnergy += armorItem.getEnergy(stack);
+            }
+        }
+        return totalEnergy >= MoreModulesConfig.current().config.mekaSuitEnergyUsageDeathCancelling.val();
     }
 }
