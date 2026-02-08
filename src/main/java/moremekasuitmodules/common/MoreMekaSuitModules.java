@@ -191,6 +191,10 @@ public class MoreMekaSuitModules implements IModule {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.SMART_WIRELESS_UNIT);
         }
 
+        if (Loader.isModLoaded("resources_radar")) {
+            ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.RESOURCE_RADAR_UNIT);
+        }
+
     }
 
 

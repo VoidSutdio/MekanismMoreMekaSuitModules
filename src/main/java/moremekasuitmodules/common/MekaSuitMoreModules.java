@@ -7,6 +7,7 @@ import moremekasuitmodules.common.content.gear.integration.appliedenergistics2.M
 import moremekasuitmodules.common.content.gear.integration.botania.*;
 import moremekasuitmodules.common.content.gear.integration.draconicevolution.ModuleChaosVortexStabilizationUnit;
 import moremekasuitmodules.common.content.gear.integration.galacticraft.ModuleThermalProtectionUnit;
+import moremekasuitmodules.common.content.gear.integration.resourceradar.ModuleResourceRadarUnit;
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearAdvancedUnit;
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearBaseUnit;
 import moremekasuitmodules.common.content.gear.integration.thaumcraft.ModuleWarpClearUltimateUnit;
@@ -85,4 +86,6 @@ public class MekaSuitMoreModules {
     public static final ModuleData<ModuleQuantumReconstructionUnit> QUANTUM_RECONSTRUCTION_UNIT = ModuleHelper.register("quantum_reconstruction_unit",ModuleQuantumReconstructionUnit::new,builder -> builder.rarity(EnumRarity.EPIC).handlesModeChange().modeChangeDisabledByDefault().disabledByDefault());
     //生命提升单元
     public static final ModuleData<ModuleHPBootsUnit> HP_BOOTS_UNIT =  ModuleHelper.register("hp_boots_unit", ModuleHPBootsUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC).noDisable());
+    //XRAY （activate resource radar）[maximum 1]
+    public static final ModuleData<?> RESOURCE_RADAR_UNIT = ModuleHelper.register("resource_radar_unit", ModuleResourceRadarUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("resources_radar")).notEnabled("tooltip.install.resources_radar"));
 }

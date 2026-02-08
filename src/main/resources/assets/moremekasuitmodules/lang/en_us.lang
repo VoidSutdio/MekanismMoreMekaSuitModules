@@ -31,6 +31,7 @@ item.module_power_enhancement_unit.name=Power enhancement unit
 item.module_high_speed_cooling_unit.name=Cooling unit boost
 item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
 item.module_hp_boots_unit.name=HP Enhancement Unit
+item.module_resource_radar_unit.name=Resource Radar Unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -65,6 +66,7 @@ module.mekanism.power_enhancement_unit=Power enhancement unit
 module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 module.mekanism.hp_boots_unit=HP Enhancement Unit
+module.mekanism.resource_radar_unit=Resource Radar Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -122,6 +124,7 @@ description.mekanism.power_enhancement_unit=Increases the user's attack speed an
 description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
 description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
 description.mekanism.hp_boots_unit=Increases the maximum maximum health of the user
+description.mekanism.resource_radar_unit=Legal XRAY! Use Z and X for setup.
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 

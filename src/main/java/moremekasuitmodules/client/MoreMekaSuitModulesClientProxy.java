@@ -84,6 +84,10 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         registerItemRender(MekaSuitMoreModulesItem.MODULE_HIGH_SPEED_COOLING);
         registerItemRender(MekaSuitMoreModulesItem.MODULE_QUANTUM_RECONSTRUCTION);
         registerItemRender(MekaSuitMoreModulesItem.HP_BOOTS_UNIT);
+
+        if (Loader.isModLoaded("resources_radar")) {
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_RESOURCE_RADAR);
+        }
     }
 
     @Override

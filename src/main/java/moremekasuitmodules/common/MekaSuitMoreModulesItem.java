@@ -42,6 +42,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_POWER_ENHANCEMENT = new ItemModule(MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT);
     public static final ItemModule MODULE_HIGH_SPEED_COOLING = new ItemModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
     public static final ItemModule MODULE_QUANTUM_RECONSTRUCTION = new ItemModule(MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
+    public static final ItemModule MODULE_RESOURCE_RADAR = new ItemModule(MekaSuitMoreModules.RESOURCE_RADAR_UNIT);
     public static final ItemModule HP_BOOTS_UNIT = new ItemModule(MekaSuitMoreModules.HP_BOOTS_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
@@ -104,6 +105,10 @@ public class MekaSuitMoreModulesItem {
         registry.register(initModule(MODULE_HIGH_SPEED_COOLING));
         registry.register(initModule(MODULE_QUANTUM_RECONSTRUCTION));
         registry.register(initModule(HP_BOOTS_UNIT));
+
+        if (Loader.isModLoaded("resources_radar")) {
+            registry.register(initModule(MODULE_RESOURCE_RADAR));
+        }
     }
 
 
