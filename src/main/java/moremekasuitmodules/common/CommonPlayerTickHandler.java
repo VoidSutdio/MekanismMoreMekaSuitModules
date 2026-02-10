@@ -22,7 +22,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
@@ -36,8 +35,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import zmaster587.advancedRocketry.api.event.AtmosphereEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class CommonPlayerTickHandler {
@@ -121,27 +118,39 @@ public class CommonPlayerTickHandler {
     //When the player dies
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onDeath(LivingDeathEvent event) {
-        if (event.getEntityLiving() instanceof EntityPlayer player) {
-            ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-            if (head.getItem() instanceof IModuleContainerItem item) {
-                boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
-                if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)
-                        || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)
-                        || isInfiniteModule) {
-                    if (!item.hasModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) && !isInfiniteModule
-                            && !tryExtractEnergyWhenDeath(player)) {
-                        return;
-                    }
-                    sendMessage(player, isInfiniteModule, item, head);
-                    if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) && !isInfiniteModule) {
-                        item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
-                    }
-                    event.setCanceled(true);
-                    Death(player, isInfiniteModule);
-                }
-            }
-
+        if (!(event.getEntityLiving() instanceof EntityPlayer player)) {
+            return;
         }
+
+        ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        if (!(head.getItem() instanceof IModuleContainerItem item)) {
+            return;
+        }
+
+        boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+        boolean isAdvancedInterception = false;
+        boolean isEmergencyRescue = false;
+        boolean death = !isInfiniteModule;
+
+        if (death && item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)
+                && tryExtractEnergyWhenDeath(player)) {
+            isAdvancedInterception = true;
+            death = false;
+        }
+
+        if (death && item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
+            item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
+            isEmergencyRescue = true;
+            death = false;
+        }
+
+        if (death) {
+            return;
+        }
+
+        sendDeathCancelMessage(player, isInfiniteModule, isAdvancedInterception, isEmergencyRescue);
+        event.setCanceled(true);
+        Death(player, isInfiniteModule);
     }
 
 
@@ -149,30 +158,46 @@ public class CommonPlayerTickHandler {
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         //If the player is affected by setHealth
         //What? Why do you want to go straight to setHealth?
-        if (MoreModulesConfig.current().config.MekAsuitOverloadProtection.val()) {
-            if (event.getEntityLiving() instanceof EntityPlayerMP player) {
-                ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (head.getItem() instanceof IModuleContainerItem item) {
-                    boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
-                    if (!player.isEntityAlive()) {
-                        if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) || item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) || isInfiniteModule) {
-                            if (!item.hasModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT) && !isInfiniteModule
-                                    && !tryExtractEnergyWhenDeath(player)) {
-                                return;
-                            }
-                            if (!item.hasModule(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT) && !isInfiniteModule) {
-                                item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
-                            }
-                            Death(player, isInfiniteModule);
-                            //重新刷新玩家的位置 确保玩家在该位置
-                            player.changeDimension(player.dimension, (world, entity, yaw) -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
-                            player.world.updateEntity(player);
-                            sendMessage(player, isInfiniteModule, item, head);
-                        }
-                    }
-                }
-            }
+        if (!MoreModulesConfig.current().config.MekAsuitOverloadProtection.val()) {
+            return;
         }
+
+        if (!(event.getEntityLiving() instanceof EntityPlayerMP player) || player.isEntityAlive()) {
+            return;
+        }
+
+        ItemStack head = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        if (!(head.getItem() instanceof IModuleContainerItem item)) {
+            return;
+        }
+
+        boolean isInfiniteModule = item.hasModule(head, MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT);
+        boolean isAdvancedInterception = false;
+        boolean isEmergencyRescue = false;
+        boolean death = !isInfiniteModule;
+
+        if (death && item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)
+                && tryExtractEnergyWhenDeath(player)) {
+            isAdvancedInterception = true;
+            death = false;
+        }
+
+        if (death && item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
+            item.removeModule(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT);
+            isEmergencyRescue = true;
+            death = false;
+        }
+
+        if (death) {
+            return;
+        }
+
+        sendDeathCancelMessage(player, isInfiniteModule, isAdvancedInterception, isEmergencyRescue);
+        Death(player, isInfiniteModule);
+        //重新刷新玩家的位置 确保玩家在该位置
+        player.changeDimension(player.dimension, (world, entity, yaw)
+                -> entity.setPositionAndUpdate(player.posX, player.posY, player.posZ));
+        player.world.updateEntity(player);
     }
 
 
@@ -188,12 +213,13 @@ public class CommonPlayerTickHandler {
         player.getFoodStats().addStats(20, 20);
     }
 
-    private void sendMessage(EntityPlayer player, boolean isInfiniteModule, IModuleContainerItem item, ItemStack head) {
+    private void sendDeathCancelMessage(EntityPlayer player, boolean isInfiniteModule, boolean isAdvancedInterceptionModule,
+                                        boolean isEmergencyRescueModule) {
         if (isInfiniteModule) {
             player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-        } else if (item.isModuleEnabled(head, MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT)) {
+        } else if (isAdvancedInterceptionModule) {
             player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
-        } else if (item.isModuleEnabled(head, MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT)) {
+        } else if (isEmergencyRescueModule) {
             player.sendMessage(new TextComponentGroup(TextFormatting.GRAY).string("[", TextFormatting.RED).translation(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT.getTranslationKey(), TextFormatting.RED).string("]", TextFormatting.RED).string(":").translation("module.emergency_rescue.use", TextFormatting.YELLOW));
         }
     }
