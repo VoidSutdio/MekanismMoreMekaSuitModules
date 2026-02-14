@@ -111,4 +111,6 @@ dependencies {
     implementation rfg.deobf("curse.maven:galaxy-space-addon-for-galacticraft-238770:7005609")
     compileOnly rfg.deobf("curse.maven:universal-tweaks-705000:6959247")
     compileOnly rfg.deobf("curse.maven:block-overlay-fix-580690:3650166")
+
+    implementation rfg.deobf(files("libs/SRParasites-1.12.2v1.9.21.jar"))
 }

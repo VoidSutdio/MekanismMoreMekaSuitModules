@@ -32,6 +32,8 @@ item.module_high_speed_cooling_unit.name=Cooling unit boost
 item.module_quantum_reconstruction_unit.name=Quantum Reconstruction Unit
 item.module_hp_boots_unit.name=HP Enhancement Unit
 item.module_resource_radar_unit.name=Resource Radar Unit
+item.module_bleeding_debuff_unit.name=Bleeding Debuff Unit
+item.module_immaleable_debuff_unit.name=Immaleable Debuff Unit
 
 module.mekanism.emergency_rescue_unit=Emergency rescue unit
 module.mekanism.advanced_interception_system_unit=Advanced Rescue System Unit
@@ -67,6 +69,8 @@ module.mekanism.high_speed_cooling_unit=Cooling unit boost
 module.mekanism.quantum_reconstruction_unit=Quantum Reconstruction Unit
 module.mekanism.hp_boots_unit=HP Enhancement Unit
 module.mekanism.resource_radar_unit=Resource Radar Unit
+module.mekanism.bleeding_debuff_unit=Bleeding Debuff Unit
+module.mekanism.immaleable_debuff_unit=Immaleable Debuff Unit
 
 module.mekanism.fix_fov=Fix FOV
 module.mekanism.fly_always=Defy Gravity Always
@@ -125,6 +129,8 @@ description.mekanism.high_speed_cooling_unit=Speed up the use of cooling items.
 description.mekanism.quantum_reconstruction_unit=By dismantling and reconstructing matter at the quantum level, the tunneling effect allows it to penetrate blocks like a spectator mode.
 description.mekanism.hp_boots_unit=Increases the maximum maximum health of the user
 description.mekanism.resource_radar_unit=Legal XRAY! Use Z and X for setup.
+description.mekanism.bleeding_debuff_unit=Applies the Bleeding debuff when dealing damage to parasites.
+description.mekanism.immaleable_debuff_unit=Applies the Immaleable debuff when dealing damage to parasites.
 
 chat.appliedenergistics2.DeviceLinked=Device Linked
 
@@ -138,7 +144,9 @@ tooltip.install.as=need to install Astral Sorcery to work
 tooltip.install.DR=need to install Draconic Evolution to work
 tooltip.install.IAF=need to install Ice and Fire to work
 tooltip.install.botania=need to install Botania to work
-tooltip.install.AE2=need to install  AE2 Unofficial Extended Life to work
+tooltip.install.AE2=need to install AE2 Unofficial Extended Life to work
+tooltip.install.resources_radar=need to install ResourceRadar(VoidStudio) to work
+tooltip.install.srparasites=need to install Scape And Run: Parasites to work
 tooltip.chaos.resistance=Chaos Resistance
 tooltip.InfiniteDefense=Infinite Defense
 

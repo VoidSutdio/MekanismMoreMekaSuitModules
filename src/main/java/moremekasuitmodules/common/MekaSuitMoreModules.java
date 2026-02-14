@@ -87,5 +87,9 @@ public class MekaSuitMoreModules {
     //生命提升单元
     public static final ModuleData<ModuleHPBootsUnit> HP_BOOTS_UNIT =  ModuleHelper.register("hp_boots_unit", ModuleHPBootsUnit::new, builder -> builder.maxStackSize(64).rarity(EnumRarity.EPIC).noDisable());
     //XRAY （activate resource radar）[maximum 1]
-    public static final ModuleData<?> RESOURCE_RADAR_UNIT = ModuleHelper.register("resource_radar_unit", ModuleResourceRadarUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("resources_radar")).notEnabled("tooltip.install.resources_radar"));
+    public static final ModuleData<ModuleResourceRadarUnit> RESOURCE_RADAR_UNIT = ModuleHelper.register("resource_radar_unit", ModuleResourceRadarUnit::new, builder -> builder.maxStackSize(1).rarity(EnumRarity.RARE).canEnable(!Loader.isModLoaded("resources_radar")).notEnabled("tooltip.install.resources_radar"));
+    //Bleeding debuff (SRParasites) [maximum 4]
+    public static final ModuleData<?> BLEEDING_DEBUFF_UNIT = ModuleHelper.registerMarker("bleeding_debuff_unit", builder -> builder.maxStackSize(4).rarity(EnumRarity.EPIC).canEnable(!Loader.isModLoaded("srparasites")).notEnabled("tooltip.install.srparasites").exclusive(1 << ModuleData.ExclusiveFlag.values().length));
+    //Immaleable debuff (SRParasites) [maximum 4]
+    public static final ModuleData<?> IMMALEABLE_DEBUFF_UNIT = ModuleHelper.registerMarker("immaleable_debuff_unit", builder -> builder.maxStackSize(1).rarity(EnumRarity.EPIC).canEnable(!Loader.isModLoaded("srparasites")).notEnabled("tooltip.install.srparasites").exclusive(1 << ModuleData.ExclusiveFlag.values().length));
 }

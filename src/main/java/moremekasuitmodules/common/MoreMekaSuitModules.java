@@ -12,6 +12,7 @@ import mekanism.common.content.gear.IModuleContainerItem;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.network.PacketSimpleGui;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.integration.srparasites.ParasiteDebuffModulesInfo;
 import moremekasuitmodules.common.network.GMUTPacketHandler;
 import moremekasuitmodules.moremekasuitmodules.Tags;
 import net.minecraft.item.Item;
@@ -193,6 +194,12 @@ public class MoreMekaSuitModules implements IModule {
 
         if (Loader.isModLoaded("resources_radar")) {
             ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_HELMET, MekaSuitMoreModules.RESOURCE_RADAR_UNIT);
+        }
+
+        if (Loader.isModLoaded("srparasites")) {
+            for (ParasiteDebuffModulesInfo info : ParasiteDebuffModulesInfo.values()) {
+                ModuleHelper.get().setSupported(MekanismItems.MEKASUIT_BODYARMOR, info.getModuleData());
+            }
         }
 
     }

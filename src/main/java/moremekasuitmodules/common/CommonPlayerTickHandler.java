@@ -4,6 +4,7 @@ import asmodeuscore.core.event.PressureEvent;
 import asmodeuscore.core.event.RadiationEvent;
 import blusunrize.immersiveengineering.common.util.IEDamageSources.ElectricDamageSource;
 import com.brandon3055.draconicevolution.lib.DEDamageSources;
+import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.google.common.collect.Sets;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.ModuleData;
@@ -14,6 +15,7 @@ import mekanism.common.integration.MekanismHooks;
 import mekanism.common.item.armor.ItemMekaSuitArmor;
 import micdoodle8.mods.galacticraft.api.event.oxygen.GCCoreOxygenSuffocationEvent;
 import moremekasuitmodules.common.config.MoreModulesConfig;
+import moremekasuitmodules.common.content.gear.integration.srparasites.ParasiteDebuffModulesInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -414,6 +416,40 @@ public class CommonPlayerTickHandler {
                 zombie.angerTargetUUID = null;
                 zombie.angerLevel = 0;
             }
+        }
+    }
+
+    @SubscribeEvent
+    @Optional.Method(modid = "srparasites")
+    public void onParasiteDamage(LivingAttackEvent event) {
+        if (!(event.getSource().getTrueSource() instanceof EntityPlayer player)
+                || !(event.getEntityLiving() instanceof EntityParasiteBase parasite)) {
+            return;
+        }
+
+        ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        if (!(stack.getItem() instanceof IModuleContainerItem item)) {
+            return;
+        }
+
+        ParasiteDebuffModulesInfo info = null;
+        IModule<?> module = null;
+        for (ParasiteDebuffModulesInfo modulesInfo : ParasiteDebuffModulesInfo.values()) {
+            IModule<?> potentialModule = item.getModule(stack, modulesInfo.getModuleData());
+            if (potentialModule != null && potentialModule.isEnabled()) {
+                info = modulesInfo;
+                module = potentialModule;
+                break;
+            }
+        }
+
+        if (info == null) {
+            return;
+        }
+
+        if (module.canUseEnergy(player, info.getEnergyPerUsage())) {
+            module.useEnergy(player, info.getEnergyPerUsage());
+            parasite.addPotionEffect(new PotionEffect(info.getPotion(), info.getDuration(), module.getInstalledCount() - 1));
         }
     }
 

@@ -43,6 +43,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemModule MODULE_HIGH_SPEED_COOLING = new ItemModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT);
     public static final ItemModule MODULE_QUANTUM_RECONSTRUCTION = new ItemModule(MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT);
     public static final ItemModule MODULE_RESOURCE_RADAR = new ItemModule(MekaSuitMoreModules.RESOURCE_RADAR_UNIT);
+    public static final ItemModule MODULE_BLEEDING_DEBUFF = new ItemModule(MekaSuitMoreModules.BLEEDING_DEBUFF_UNIT);
+    public static final ItemModule MODULE_IMMALEABLE_DEBUFF = new ItemModule(MekaSuitMoreModules.IMMALEABLE_DEBUFF_UNIT);
     public static final ItemModule HP_BOOTS_UNIT = new ItemModule(MekaSuitMoreModules.HP_BOOTS_UNIT);
 
     public static void registerItems(IForgeRegistry<Item> registry) {
@@ -108,6 +110,11 @@ public class MekaSuitMoreModulesItem {
 
         if (Loader.isModLoaded("resources_radar")) {
             registry.register(initModule(MODULE_RESOURCE_RADAR));
+        }
+
+        if (Loader.isModLoaded("srparasites")) {
+            registry.register(initModule(MODULE_BLEEDING_DEBUFF));
+            registry.register(initModule(MODULE_IMMALEABLE_DEBUFF));
         }
     }
 

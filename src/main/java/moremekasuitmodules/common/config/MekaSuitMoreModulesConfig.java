@@ -22,6 +22,9 @@ public class MekaSuitMoreModulesConfig extends BaseConfig {
     public DoubleOption mekaSuitEnergyUsageItemAttack = new DoubleOption(this, "energyUsageItemattack", 200, "Energy cost per tick attacking entity");
     public DoubleOption mekaSuitEnergyUsageDeathCancelling = new DoubleOption(this, "energyUsageWhenDeath", 25000000, "Energy cost for death cancelling");
 
+    public DoubleOption moduleBleedingDebuffEnergyUsage = new DoubleOption(this, "moduleBleedingDebuffEnergyUsage", 5000, "Energy cost for applying the bleeding debuff");
+    public DoubleOption moduleImmaleableDebuffEnergyUsage = new DoubleOption(this, "moduleImmaleableDebuffEnergyUsage", 80000, "Energy cost for applying the immaleable debuff");
+
     @Override
     public String getCategory() {
         return "moremodules";

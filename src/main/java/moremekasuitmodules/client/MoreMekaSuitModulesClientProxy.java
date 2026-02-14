@@ -88,6 +88,11 @@ public class MoreMekaSuitModulesClientProxy extends MoreMekaSuitModulesCommonPro
         if (Loader.isModLoaded("resources_radar")) {
             registerItemRender(MekaSuitMoreModulesItem.MODULE_RESOURCE_RADAR);
         }
+
+        if (Loader.isModLoaded("srparasites")) {
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_BLEEDING_DEBUFF);
+            registerItemRender(MekaSuitMoreModulesItem.MODULE_IMMALEABLE_DEBUFF);
+        }
     }
 
     @Override
