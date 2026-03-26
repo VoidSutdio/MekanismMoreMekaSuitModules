@@ -1,0 +1,90 @@
+item.module_emergency_rescue_unit.name=Модуль: Экстренное спасение
+item.module_advanced_interception_system_unit.name=Модуль: Совершенная система спасения
+item.module_gravitational_modulating_additional_unit.name=Модуль: Гравитационное дополнение
+item.module_energy_shield_unit.name=Модуль: Энергетический щит
+item.module_chaos_resistance_unit.name=Модуль: Сопротивление Хаосу
+item.module_chaos_vortex_stabilization_unit.name=Модуль: Стабилизация Хаос вихря
+item.module_infinite_energy_supply_unit.name=Модуль: Бесконечная энергия
+item.module_smart_wireless_unit.name=Модуль: Беспроводная связь
+item.module_infinite_gas_supply_unit.name=Модуль: Бесконечный газ
+item.module_automatic_attack_unit.name=Модуль: Автоматический бой
+item.module_power_enhancement_unit.name=Модуль: Повышение мощности
+item.module_high_speed_cooling_unit.name=Модуль: Ускоренное охлаждение
+item.module_quantum_reconstruction_unit.name=Модуль: Квантовая реконструкция
+item.module_hp_boots_unit.name=Модуль: Усиление здоровья
+item.module_resource_radar_unit.name=Модуль: Радар ресурсов
+item.module_bleeding_debuff_unit.name=Модуль: Кровотечение
+item.module_immaleable_debuff_unit.name=Модуль: Деградация
+
+module.mekanism.emergency_rescue_unit=Модуль: Экстренное спасение
+module.mekanism.advanced_interception_system_unit=Модуль: Совершенная система спасения
+module.mekanism.gravitational_modulating_additional_unit=Модуль: Гравитационное дополнение
+module.mekanism.energy_shield_unit=Модуль: Энергетический щит
+module.mekanism.chaos_resistance_unit=Модуль: Сопротивление Хаосу
+module.mekanism.chaos_vortex_stabilization_unit=Модуль: Стабилизация Хаос вихря
+module.mekanism.infinite_energy_supply_unit=Модуль: Бесконечная энергия
+module.mekanism.smart_wireless_unit=Модуль: Беспроводная связь
+module.mekanism.infinite_gas_supply_unit=Модуль: Бесконечный газ
+module.mekanism.automatic_attack_unit=Модуль: Автоматический бой
+module.mekanism.power_enhancement_unit=Модуль: Повышение мощности
+module.mekanism.high_speed_cooling_unit=Модуль: Ускоренное охлаждение
+module.mekanism.quantum_reconstruction_unit=Модуль: Квантовая реконструкция
+module.mekanism.hp_boots_unit=Модуль: Усиление здоровья
+module.mekanism.resource_radar_unit=Модуль: Радар ресурсов
+module.mekanism.bleeding_debuff_unit=Модуль: Кровотечение
+module.mekanism.immaleable_debuff_unit=Модуль: Деградация
+
+module.mekanism.fix_fov=Исправление поля зрения
+module.mekanism.fly_always=Постоянный полёт
+module.mekanism.stop_immediately=Погашение инерции
+module.mekanism.vertical_speed=Вертикальное ускорение
+constants.mekanism.key_category=Mekanism - Модуль: Гравитационное дополнение
+key.mekanism.vertical_speed=Переключение множителя вертикального ускорения
+module.mekanism.wireless_terminal=Беспроводной терминал
+module.mekanism.wireless_matching=Только выбр. терминал
+module.mekanism.terminal=Обычн.
+module.mekanism.crafting=Крафта
+module.mekanism.pattern=Шаблон.
+module.mekanism.fluid=Жидк.
+module.mekanism.wireless_terminal_mode=Режим беспроводного терминала
+module.emergency_rescue.use=Внимание! Игрок получил смертельный удар! Урон перехвачен!
+module.mekanism.damage_true_source_exclude=Исключение прямых источников урона
+module.mekanism.damage_true_source_exclude_indirect=Исключение косвенных источников урона
+module.mekanism.attack_player=Атаковать игроков
+module.mekanism.attack_hostile=Атаковать враждебных мобов
+module.mekanism.attack_friendly=Атаковать дружелюбных мобов
+
+description.mekanism.emergency_rescue_unit=Когда вы умираете этот модуль расходуется и восстанавливает здоровье
+description.mekanism.advanced_interception_system_unit=Улучшенная версия модуля "Экстренное спасение", которая не расходуется.
+description.mekanism.gravitational_modulating_additional_unit=Предоставляет дополнительные функции к модулю "Гравитационная модуляция"
+description.mekanism.energy_shield_unit=Используйте энергетические щиты подобно броне Draconic Evolution для подавления урона.
+description.mekanism.chaos_resistance_unit=Обеспечивает сопротивление урону Хаоса.
+description.mekanism.chaos_vortex_stabilization_unit=Автоматически расходуется для подавления хаотического вихря при добыче осколков хаоса.
+description.mekanism.infinite_energy_supply_unit=Постоянная бесконечная зарядка Meka-устройств.
+description.mekanism.smart_wireless_unit=Обеспечивает беспроводную связь с МЭ сетью. Для открытия терминалов используются стандартные клавиши AE2.
+description.mekanism.infinite_gas_supply_unit=Постоянное бесконечное наполнение газом Meka-брони.
+description.mekanism.automatic_attack_unit=Автоматически атакует всех существ в радиусе действия игрока.
+description.mekanism.power_enhancement_unit=Увеличивает скорость атаки игрока и наносимый им урон.
+description.mekanism.high_speed_cooling_unit=Ускоряет использование охлаждающих предметов.
+description.mekanism.quantum_reconstruction_unit=Разбирая и реконструируя материю на квантовом уровне, позволяет проходить сквозь блоки как в режиме наблюдателя.
+description.mekanism.hp_boots_unit=Увеличивает максимальное здоровье игрока.
+description.mekanism.resource_radar_unit=Легальный XRAY! Используйте §bZ§7 и §bX§7 для настройки.
+description.mekanism.bleeding_debuff_unit=При нанесении урона паразитам накладывает на них эффект "Кровотечение".
+description.mekanism.immaleable_debuff_unit=При нанесении урона паразитам накладывает на них эффект "Деградация", что отключает их механику адаптации.
+
+
+chat.appliedenergistics2.DeviceLinked=Устройство связано
+
+tooltip.install.DR=для работы необходимо установить Draconic Evolution
+tooltip.install.AE2=для работы необходимо установить AE2 Unofficial Extended Life
+tooltip.install.resources_radar=для работы необходимо установить ResourceRadar(VoidStudio)
+tooltip.install.srparasites=для работы необходимо установить Scape And Run: Parasites
+tooltip.chaos.resistance=Сопротивление хаосу
+tooltip.InfiniteDefense=Бесконечная защита
+
+tooltip.moremekasuitmodules.warning=Предупреждение：
+tooltip.moremekasuitmodules.rangeExclude=Исключение области действия включается автоматически и не может быть выбрано
+
+tooltip.moremekasuitmodules.damage_true_source_exclude=Начато устранение прямых источников урона.
+tooltip.moremekasuitmodules.damage_true_source_exclude_indirect=Начато устранение косвенных источников урона.
+tooltip.moremekasuitmodules.damage_true_source_exclude.warning=Это состояние не способно нанести урон некоторым сущностям, которым требуется источник урона.
