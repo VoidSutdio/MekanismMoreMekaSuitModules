@@ -54,8 +54,8 @@ module.mekanism.attack_player=Атаковать игроков
 module.mekanism.attack_hostile=Атаковать враждебных мобов
 module.mekanism.attack_friendly=Атаковать дружелюбных мобов
 
-description.mekanism.emergency_rescue_unit=Когда вы умираете этот модуль расходуется и восстанавливает здоровье
-description.mekanism.advanced_interception_system_unit=Улучшенная версия модуля "Экстренное спасение", которая не расходуется.
+description.mekanism.emergency_rescue_unit=Когда вы умираете этот модуль расходуется и восстанавливает здоровье.
+description.mekanism.advanced_interception_system_unit=Улучшенная версия модуля "Экстренное спасение", которая не расходуется, но требует энергию.
 description.mekanism.gravitational_modulating_additional_unit=Предоставляет дополнительные функции к модулю "Гравитационная модуляция"
 description.mekanism.energy_shield_unit=Используйте энергетические щиты подобно броне Draconic Evolution для подавления урона.
 description.mekanism.chaos_resistance_unit=Обеспечивает сопротивление урону Хаоса.
